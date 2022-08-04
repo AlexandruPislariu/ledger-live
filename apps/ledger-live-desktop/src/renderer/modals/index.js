@@ -12,7 +12,6 @@ import MODAL_RECEIVE from "./Receive";
 import MODAL_SEND from "./Send";
 import MODAL_SIGN_MESSAGE from "./SignMessage";
 import MODAL_SIGN_TRANSACTION from "./SignTransaction";
-import MODAL_REQUEST_ACCOUNT from "./RequestAccount";
 import MODAL_UPDATE_FIRMWARE from "./UpdateFirmwareModal";
 import MODAL_MIGRATE_ACCOUNTS from "./MigrateAccounts";
 import MODAL_EXPORT_ACCOUNTS from "./ExportAccounts";
@@ -21,11 +20,11 @@ import MODAL_SHARE_ANALYTICS from "./ShareAnalytics";
 import MODAL_SETTINGS_ACCOUNT from "./SettingsAccount";
 import MODAL_RELEASE_NOTES from "./ReleaseNotes";
 import MODAL_SYSTEM_LANGUAGE_AVAILABLE from "./SystemLanguageAvailable";
+// $FlowFixMe
+import MODAL_TERM_OF_USE_UPDATE from "./TermOfUseUpdate";
 import MODAL_EXCHANGE_CRYPTO_DEVICE from "./ExchangeDeviceConfirm";
 import MODAL_SELL_CRYPTO_DEVICE from "./SellDeviceConfirm";
-import MODAL_SWAP from "./Swap";
 import MODAL_SWAP_RESET_KYC from "./Swap/ResetKYC";
-import MODAL_SWAP_UNAUTHORIZED_RATES from "./Swap/UnauthorizedRates";
 import MODAL_WALLETCONNECT_PASTE_LINK from "./WalletConnectPasteLink";
 import MODAL_WALLETCONNECT_DEEPLINK from "./WalletConnectDeeplink";
 import MODAL_PLATFORM_EXCHANGE_START from "./Platform/Exchange/StartExchange";
@@ -42,6 +41,12 @@ import MODAL_VOTE_TRON from "./VoteTron";
 import MODAL_VOTE_TRON_INFO from "./VoteTron/Info";
 import MODAL_BLACKLIST_TOKEN from "./BlacklistToken";
 import MODAL_HIDE_NFT_COLLECTION from "./HideNftCollection";
+
+import MODAL_ELROND_DELEGATE from "../families/elrond/components/Modals/Delegate";
+import MODAL_ELROND_REWARDS_INFO from "../families/elrond/components/Modals/Delegate/Info";
+import MODAL_ELROND_UNDELEGATE from "../families/elrond/components/Modals/Undelegate";
+import MODAL_ELROND_CLAIM_REWARDS from "../families/elrond/components/Modals/Claim";
+import MODAL_ELROND_WITHDRAW from "../families/elrond/components/Modals/Withdraw";
 
 import MODAL_COSMOS_DELEGATE from "../families/cosmos/DelegationFlowModal";
 import MODAL_COSMOS_REWARDS_INFO from "../families/cosmos/DelegationFlowModal/Info";
@@ -60,6 +65,8 @@ import MODAL_POLKADOT_NOMINATE from "../families/polkadot/NominationFlowModal";
 import MODAL_POLKADOT_BOND from "../families/polkadot/BondFlowModal";
 import MODAL_POLKADOT_UNBOND from "../families/polkadot/UnbondFlowModal";
 import MODAL_POLKADOT_REBOND from "../families/polkadot/RebondFlowModal";
+
+import MODAL_STELLAR_ADD_ASSET from "../families/stellar/AddAssetModal";
 
 import MODAL_SOLANA_REWARDS_INFO from "../families/solana/DelegationFlowModal/Info";
 import MODAL_SOLANA_DELEGATE from "../families/solana/DelegationFlowModal";
@@ -92,7 +99,6 @@ const modals: { [_: string]: React$ComponentType<any> } = {
   MODAL_SEND,
   MODAL_SIGN_MESSAGE,
   MODAL_SIGN_TRANSACTION,
-  MODAL_REQUEST_ACCOUNT,
   MODAL_UPDATE_FIRMWARE,
   MODAL_DELEGATE,
   MODAL_MIGRATE_ACCOUNTS,
@@ -102,6 +108,7 @@ const modals: { [_: string]: React$ComponentType<any> } = {
   MODAL_SETTINGS_ACCOUNT,
   MODAL_RELEASE_NOTES,
   MODAL_SYSTEM_LANGUAGE_AVAILABLE,
+  MODAL_TERM_OF_USE_UPDATE,
   MODAL_CLAIM_REWARDS,
   MODAL_FREEZE,
   MODAL_UNFREEZE,
@@ -115,6 +122,11 @@ const modals: { [_: string]: React$ComponentType<any> } = {
   MODAL_COSMOS_CLAIM_REWARDS,
   MODAL_COSMOS_REDELEGATE,
   MODAL_COSMOS_UNDELEGATE,
+  MODAL_ELROND_DELEGATE,
+  MODAL_ELROND_REWARDS_INFO,
+  MODAL_ELROND_UNDELEGATE,
+  MODAL_ELROND_CLAIM_REWARDS,
+  MODAL_ELROND_WITHDRAW,
   MODAL_EXCHANGE_CRYPTO_DEVICE,
   MODAL_SELL_CRYPTO_DEVICE,
   MODAL_ALGORAND_OPT_IN,
@@ -127,6 +139,7 @@ const modals: { [_: string]: React$ComponentType<any> } = {
   MODAL_POLKADOT_BOND,
   MODAL_POLKADOT_UNBOND,
   MODAL_POLKADOT_REBOND,
+  MODAL_STELLAR_ADD_ASSET,
   MODAL_SOLANA_REWARDS_INFO,
   MODAL_SOLANA_DELEGATE,
   MODAL_SOLANA_DELEGATION_ACTIVATE,
@@ -146,8 +159,6 @@ const modals: { [_: string]: React$ComponentType<any> } = {
   MODAL_LEND_NO_ETHEREUM_ACCOUNT,
   MODAL_LEND_EMPTY_ACCOUNT_DEPOSIT,
   // Swap
-  MODAL_SWAP,
-  MODAL_SWAP_UNAUTHORIZED_RATES,
   MODAL_SWAP_RESET_KYC,
   // Platform
   MODAL_PLATFORM_EXCHANGE_START,

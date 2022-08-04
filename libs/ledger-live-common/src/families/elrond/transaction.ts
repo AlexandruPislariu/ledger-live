@@ -1,10 +1,13 @@
 import type { Transaction, TransactionRaw } from "./types";
 import { BigNumber } from "bignumber.js";
 import {
+  formatTransactionStatusCommon as formatTransactionStatus,
   fromTransactionCommonRaw,
+  fromTransactionStatusRawCommon as fromTransactionStatusRaw,
   toTransactionCommonRaw,
+  toTransactionStatusRawCommon as toTransactionStatusRaw,
 } from "../../transaction/common";
-import type { Account } from "../../types";
+import type { Account } from "@ledgerhq/types-live";
 import { getAccountUnit } from "../../account";
 import { formatCurrencyUnit } from "../../currencies";
 export const formatTransaction = (
@@ -29,8 +32,10 @@ export const fromTransactionRaw = (tr: TransactionRaw): Transaction => {
     family: tr.family,
     mode: tr.mode,
     fees: tr.fees ? new BigNumber(tr.fees) : null,
+    gasLimit: tr.gasLimit,
   };
 };
+
 export const toTransactionRaw = (t: Transaction): TransactionRaw => {
   const common = toTransactionCommonRaw(t);
   return {
@@ -38,10 +43,15 @@ export const toTransactionRaw = (t: Transaction): TransactionRaw => {
     family: t.family,
     mode: t.mode,
     fees: t.fees?.toString() || null,
+    gasLimit: t.gasLimit,
   };
 };
+
 export default {
   formatTransaction,
   fromTransactionRaw,
   toTransactionRaw,
+  fromTransactionStatusRaw,
+  toTransactionStatusRaw,
+  formatTransactionStatus,
 };

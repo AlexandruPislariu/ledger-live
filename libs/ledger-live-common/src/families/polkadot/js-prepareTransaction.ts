@@ -1,15 +1,16 @@
-import type { Account } from "../../types";
-import type { Transaction } from "./types";
+import type { PolkadotAccount, Transaction } from "./types";
 import getEstimatedFees from "./js-getFeesForTransaction";
+import { loadPolkadotCrypto } from "./polkadot-crypto";
 
 const sameFees = (a, b) => (!a || !b ? a === b : a.eq(b));
 
 /**
  * Calculate fees for the current transaction
- * @param {Account} a
+ * @param {PolkadotAccount} a
  * @param {Transaction} t
  */
-const prepareTransaction = async (a: Account, t: Transaction) => {
+const prepareTransaction = async (a: PolkadotAccount, t: Transaction) => {
+  await loadPolkadotCrypto();
   let fees = t.fees;
   fees = await getEstimatedFees({
     a,

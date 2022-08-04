@@ -228,6 +228,7 @@
       "kyc": "KYC"
     },
     "form": {
+      "changeCTA": "Change",
       "ratesDrawer": {
         "title": "Rate",
         "quote": "Quote",
@@ -267,11 +268,25 @@
           "complete": "Complete KYC",
           "update": "Refresh KYC",
           "rejected": "KYC rejected, start the verification again",
+          "rejectedContactProviderSupport": "KYC rejected, please contact {{providerName}} support",
+          "updateRequired": "Complete or update your KYC",
           "status": {
             "pending": "KYC pending",
             "approved": "KYC approved",
-            "closed": "KYC rejected"
+            "closed": "KYC rejected",
+            "upgradeRequired": "KYC insufficient"
           }
+        },
+        "login": {
+          "required": "You need to login with this provider",
+          "complete": "Login"
+        },
+        "mfa": {
+          "required": "You need to set up MFA with this provider",
+          "complete": "Set up MFA"
+        },
+        "withdrawalsBlockedError": {
+          "message": "Your withdrawal has been blocked by {{providerName}}.\n\n Please contact their support for more information."
         }
       }
     },
@@ -346,6 +361,7 @@
     "title": "Swap",
     "titleCrypto": "Swap {{currency}}",
     "whatIsSwap": "What is Swap",
+    "decentralizedSwapAvailable": "For some transactions you may consider using decentralised SWAP. Discover <0>ParaSwap</0> and <1>1inch</1>.",
     "paraswap": {
       "cta": " Check it out",
       "description": "Looking for Paraswap? It has been moved to the Discover tab."
@@ -482,9 +498,9 @@
       "subtitle": "Please update Ledger Live to the latest version, and re verify your identity to swap with wyre",
       "cta": "Reset verification"
     },
-    "resetKYCModal": {
-      "title": "Delete your KYC",
-      "subtitle": "Delete your KYC to erase all tokens stored locally on your computer. You will have to resubmit your KYC to access services provided by our partners.",
+    "resetThirdPartyDataModal": {
+      "title": "Delete your local third party data",
+      "subtitle": "Delete your local third party data. You may have to resubmit your KYC and/or login again to access services provided by our partners.",
       "cta": "Confirm"
     },
     "modal": {
@@ -1283,7 +1299,8 @@
         "description": "Description",
         "tokenAddress": "Token Address",
         "tokenId": "Token ID",
-        "quantity": "Quantity"
+        "quantity": "Quantity",
+        "floorPrice": "Floor Price"
       }
     },
     "collections": {
@@ -1331,6 +1348,14 @@
       "link": "How Assets (ASA) works?",
       "seeTokens": "Show ASA ({{tokenCount}})",
       "hideTokens": "Hide ASA ({{tokenCount}})"
+    },
+    "stellar": {
+      "title": "Assets",
+      "cta": "Add asset",
+      "placeholder": "You can add assets to your {{currencyName}} account.",
+      "link": "Learn more about Stellar assets",
+      "seeTokens": "Show assets ({{tokenCount}})",
+      "hideTokens": "Hide assets ({{tokenCount}})"
     }
   },
   "subAccounts": {
@@ -1518,7 +1543,8 @@
       "fees": "Fees",
       "provider": "Provider",
       "payoutNetworkFees": "Payout fees",
-      "payoutNetworkFeesTooltip": "This amount will not be shown on your device"
+      "payoutNetworkFeesTooltip": "This amount will not be shown on your device",
+      "acceptTerms": "By validating this transaction, I accept\n<0>{{provider}}'s terms of use</0>"
     },
     "swap2": {
       "amountSent": "Amount to send",
@@ -1965,6 +1991,14 @@
     "header": "Account allocation ({{count}})"
   },
   "elrond": {
+    "summary": {
+      "availableBalanceTooltip": "This amount can be transferred.",
+      "availableBalance": "Available balance",
+      "delegatedAssetsTooltip": "Staked assets are used indirectly by the staking provider to operate validator nodes, process transactions and secure the network by participating in the consensus mechanism.",
+      "delegatedAssets": "Staked assets",
+      "undelegatingTooltip": "Unstaked assets are subject to a 10-day unbonding period, before being able to be withdrawn.",
+      "undelegating": "Pending Withdrawals"
+    },
     "account": {
       "subHeader": {
         "cardTitle": "Powered by Elrond",
@@ -1975,6 +2009,174 @@
         "description2": "The Elrond eGold (EGLD) Token is native to the Elrond Network and will be used for everything from transactions, staking, smart contracts, governance and validator rewards.",
         "description3": "We are actively working with the Elrond team to add more functionality, such as staking, native ESDT (Elrond Standard Digital Token) support, and more.",
         "website": "The Internet Scale Blockchain"
+      }
+    },
+    "delegation": {
+      "emptyState": {
+        "description": "Stake your EGLD to secure the network and capture your share of the rewards.",
+        "info": "What is staking and how does it work?",
+        "delegation": "Earn rewards"
+      },
+      "claimRewards": "Claim rewards",
+      "header": "My Stake",
+      "noRewards": "No rewards available",
+      "delegate": "Stake Now",
+      "undelegate": "Unstake",
+      "redelegate": "Redelegate",
+      "redelegateDisabledTooltip": "You can redelegate again <0>{{days}}</0>",
+      "redelegateMaxDisabledTooltip": "You cannot redelegate more than <0>7</0> validators at a time",
+      "undelegateDisabledTooltip": "You cannot undelegate more than <0>7</0> validators at a time",
+      "reward": "Claim rewards",
+      "currentDelegation": "Delegated: <0>{{amount}}</0>",
+      "apr": "APR",
+      "activeTooltip": "Staked amounts generate rewards",
+      "inactiveTooltip": "Unstaked amounts do not generate rewards",
+      "minSafeWarning": "Not enough funds",
+      "flow": {
+        "title": "Stake",
+        "steps": {
+          "amount": {
+            "subtitle": "Stake your assets to one of the following Staking Providers.",
+            "warning": "Choose your Staking Provider wisely: currently, the only risk is of not getting rewards due to various reasons, therefore you should select a provider based on Reliability, Communication and Economics.",
+            "fields": {
+              "validator": "Staking Provider"
+            }
+          },
+          "fields": {
+            "amount": "Amount to stake"
+          },
+          "starter": {
+            "description": "You can earn rewards by staking your EGLD assets to a Staking Provider.",
+            "bullet": [
+              "You keep ownership of staked assets",
+              "Stake using your Ledger device",
+              "Assets will be available 10 days after Unstaking"
+            ],
+            "warning": {
+              "description": "Choose your Staking Provider wisely: currently, the only risk is of not getting rewards due to various reasons, therefore you should select a provider based on Reliability, Communication and Economics."
+            }
+          },
+          "validator": {
+            "title": "Staking Providers"
+          },
+          "connectDevice": {
+            "title": "Device"
+          },
+          "confirmation": {
+            "title": "Confirmation",
+            "success": {
+              "title": "You have successfully staked your assets.",
+              "text": "Your account balance will be updated when the blockchain confirms the transaction.",
+              "cta": "View details"
+            },
+            "broadcastError": "Your transaction may have failed. Please wait a moment then check the transaction history before trying again."
+          }
+        }
+      }
+    },
+    "claimRewards": {
+      "flow": {
+        "title": "Claim rewards",
+        "steps": {
+          "claimRewards": {
+            "title": "Rewards",
+            "compound": "Stake Rewards",
+            "claim": "Claim Rewards",
+            "compoundOrClaim": "Stake Rewards or Claim Rewards",
+            "compoundDescription": "Rewards will be added to the staked amount.",
+            "claimDescription": "Rewards will be added to your available balance.",
+            "compoundInfo": "You have earned <0>{{amount}}</0>. By clicking Continue, they will be claimed now and automatically delegated to the same Staking Provider.",
+            "claimInfo": "You have earned <0>{{amount}}</0> from the Staking Provider below. By clicking Continue, they will be claimed now and automatically added to the available balance.",
+            "selectLabel": "Select one of your Staking Providers"
+          },
+          "connectDevice": {
+            "title": "Device"
+          },
+          "confirmation": {
+            "title": "Confirmation",
+            "label": "Confirmation",
+            "success": {
+              "title": "Claim rewards was successful",
+              "titleCompound": "Staked rewards was successful",
+              "text": "The rewards have been added to your available balance",
+              "textCompound": "Your stake rewards transaction of <0>{{amount}}</0> to <0>{{validator}}</0> was successfully processed.",
+              "cta": "View details"
+            },
+            "pending": {
+              "title": "Broadcasting transaction..."
+            },
+            "broadcastError": "Your transaction may have failed. Please wait a moment then check the transaction history before trying again."
+          }
+        }
+      }
+    },
+    "undelegation": {
+      "header": "Unstaked position(s)",
+      "headerTooltip": "Available after the 10-day unbonding period.",
+      "inactiveTooltip": "Undelegated amounts do not generate rewards.",
+      "withdraw": {
+        "cta": "Finalize Withdrawal"
+      },
+      "flow": {
+        "title": "Unstake assets",
+        "steps": {
+          "amount": {
+            "title": "Amount",
+            "subtitle": "The unstaking process takes <0>10 days</0> to finalize.",
+            "warning": "Rewards will be claimed automatically. Unstaking is a 2 step process: unstaking request, followed by a <0>10-day unbonding period</0> after which you can finalize the withdrawal and the unstaked amount will be transferred to your available balance.",
+            "fields": {
+              "validator": "Staking Provider",
+              "amount": "Amount to unstake"
+            }
+          },
+          "device": {
+            "title": "Device"
+          },
+          "confirmation": {
+            "title": "Confirmation",
+            "success": {
+              "title": "You have successfully unstaked your assets.",
+              "description": "<0>{{amount}}</0> were unstaked from <0>{{validator}}</0>",
+              "cta": "View details"
+            },
+            "broadcastError": "Your transaction may have failed. Please wait a moment then check the transaction history before trying again."
+          }
+        }
+      }
+    },
+    "withdraw": {
+      "flow": {
+        "title": "Finalize Withdrawal",
+        "steps": {
+          "withdraw": {
+            "title": "Finalize Withdrawal",
+            "description": "You unstaked <0>{{amount}}</0> from the Staking Provider below. By clicking Continue, they will be withdrawn now and automatically added back to the available balance.",
+            "selectLabel": "Select an unstaked position"
+          },
+          "connectDevice": {
+            "title": "Device"
+          },
+          "confirmation": {
+            "title": "Confirmation",
+            "label": "Confirmation",
+            "success": {
+              "title": "Funds withdrawn successfully",
+              "text": "The amount of {{amount}} was withdrawn back into your account balance.",
+              "cta": "View details"
+            },
+            "pending": {
+              "title": "Broadcasting transaction..."
+            },
+            "broadcastError": "Your transaction may have failed. Please wait a moment then check the transaction history before trying again."
+          }
+        }
+      }
+    }
+  },
+  "cardano": {
+    "account": {
+      "subHeader": {
+        "cardTitle": "Total balance doesn't include staking rewards"
       }
     }
   },
@@ -2068,10 +2270,10 @@
     "replaceable": "replaceable",
     "cannotSelect": {
       "unconfirmed": "You cannot select coins from unconfirmed, replaceable transactions.",
+      "pending": "You cannot select coins from pending transactions. (except your change output)",
       "last": "You need at least one selected"
     },
     "pending": "pending",
-    "pickUnconfirmedRBF": "Include coins from unconfirmed, replaceable transactions.",
     "pickingStrategy": "UTXO picking strategy",
     "pickingStrategyLabels": {
       "DEEP_OUTPUTS_FIRST": "Oldest coins first (FIFO)",
@@ -2566,6 +2768,31 @@
       }
     }
   },
+  "stellar": {
+    "addAsset": {
+      "title": "Add asset",
+      "steps": {
+        "assets": {
+          "title": "Asset",
+          "info": "Adding an asset requires sending a transaction with minimum fees. This will appear in your transaction history",
+          "selectLabel": "Choose an asset",
+          "disabledTooltip": "You already have this asset on your Stellar account"
+        },
+        "connectDevice": {
+          "title": "Device"
+        },
+        "confirmation": {
+          "title": "Confirmation",
+          "success": {
+            "title": "{{token}} asset successfully added",
+            "text": "You can now receive and send <0>{{token}}</0> assets on your Stellar account.",
+            "cta": "View details"
+          },
+          "broadcastError": "Your transaction may have failed. Please wait a moment then check the transaction history before trying again."
+        }
+      }
+    }
+  },
   "solana": {
     "common": {
       "broadcastError": "Your transaction may have failed. Please wait a moment then check the transaction history before trying again.",
@@ -2852,8 +3079,8 @@
       "softResetTitle": "Clear cache",
       "softResetDesc": "Clear the Ledger Live cache to force resynchronization with the blockchain.",
       "softReset": "Clear",
-      "resetKYC": "Reset KYC data",
-      "resetKYCDesc": "Erase all your Know your Customer data stored locally used to access third-party transaction provider.",
+      "resetThirdPartyData": "Reset third party data",
+      "resetThirdPartyDataDesc": "Erase all your local third party data, used to access third-party transaction provider.",
       "hardResetTitle": "Reset Ledger Live",
       "hardResetDesc": "Erase all Ledger Live data stored on your computer, including your accounts, transaction histories and settings.",
       "hardReset": "Reset",
@@ -3705,7 +3932,25 @@
     "switchLabel": "I have read and accept the Terms of service and Privacy policy",
     "cta": "Enter Ledger app"
   },
+  "updatedTerms": {
+    "title": "Terms of Use Update",
+    "body": {
+      "intro": "Hi! We've updated our Ledger Live Terms of Use with the aim to make them clearer and to reflect Ledger Live's newly available services and features. Key updates are focused on:",
+      "bulletPoints": [
+        "Clarifying what services are available and how they work",
+        "Explaining how fees for Services work",
+        "Improving our notification process to make sure that you are properly informed of any new changes to our Terms of Use"
+      ],
+      "agreement": "By clicking on \"Continue\" you agree that you have read and accept the Terms of Use below."
+    },
+    "link": "Terms of Use",
+    "cta": "Continue"
+  },
   "families": {
+    "cardano": {
+      "memoPlaceholder": "Optional",
+      "memo": "Memo"
+    },
     "stellar": {
       "memo": "Memo",
       "memoType": {
@@ -3715,7 +3960,20 @@
         "MEMO_HASH": "Memo Hash",
         "MEMO_RETURN": "Memo Return"
       },
-      "memoWarningText": "When using a Memo, carefully verify the type used with the recipient"
+      "memoWarningText": "When using a Memo, carefully verify the type used with the recipient",
+      "fee": "Fees",
+      "feeInfoText": "Transaction on the Stellar network require a minimum transaction fee of 0.00001 XLM",
+      "suggested": "Suggested",
+      "recommendedFee": "Recommended fee",
+      "recommenndedFeeInfo": "You can still submit this transaction with lower fee than recommended but it may not be completed",
+      "networkCongestion": "network congestion",
+      "networkCongestionLevel": {
+        "LOW": "Low",
+        "MEDIUM": "Medium",
+        "HIGH": "High"
+      },
+      "assetCode": "Asset code",
+      "assetIssuer": "Asset issuer"
     },
     "cosmos": {
       "memo": "Memo",
@@ -4268,14 +4526,8 @@
     "FeeTooHigh": {
       "title": "Network fees are above 10% of the amount"
     },
-    "StellarWrongMemoFormat": {
-      "title": "Memo format is wrong"
-    },
     "SourceHasMultiSign": {
       "title": "Please disable multisign to send {{currencyName}}"
-    },
-    "StellarMemoRecommended": {
-      "title": "A memo may be required when sending to this recipient"
     },
     "SwapExchangeRateAmountTooLow": {
       "title": "Amount must be at least {{minAmountFromFormatted}}"
@@ -4335,7 +4587,7 @@
     "SolanaUseAllAmountStakeWarning": {
       "title": "Ensure you have enough balance left for future transactions fees"
     },
-    "SolanaTxSimulationFailedPendingOp": {
+    "SolanaTxSimulationFailedWhilePendingOp": {
       "title": "Your previous transaction hasn't been processed yet. Please wait a moment then check the transaction history before trying again."
     },
     "SolanaTxConfirmationTimeout": {
@@ -4343,6 +4595,47 @@
     },
     "NotEnoughNftOwned": {
       "title": "You have exceeded the number of available tokens"
+    },
+    "CardanoMinAmountError": {
+      "title": "Minimum sendable amount is {{amount}} ADA"
+    },
+    "CardanoNotEnoughFunds": {
+      "title": "Please ensure you have enough funds to pay for fees"
+    },
+    "StellarWrongMemoFormat": {
+      "title": "Memo format is wrong"
+    },
+    "StellarMemoRecommended": {
+      "title": "A memo may be required when sending to this recipient"
+    },
+    "StellarAssetNotAccepted": {
+      "title": "This recipient doesn't have a trustline to {{assetCode}} yet"
+    },
+    "StellarAssetRequired": {
+      "title": "A Stellar asset should be selected before adding a trustline"
+    },
+    "StellarAssetNotFound": {
+      "title": "Selected Stellar asset could not be found"
+    },
+    "StellarNotEnoughNativeBalance": {
+      "title": "Sorry, insufficient funds",
+      "description": "Please make sure the account has enough funds to cover the transaction fee"
+    },
+    "StellarFeeSmallerThanRecommended": {
+      "title": "The selected fee is lower than the recommended fee"
+    },
+    "StellarFeeSmallerThanBase": {
+      "title": "The minimum transaction fee is 0.00001 XLM"
+    },
+    "StellarNotEnoughNativeBalanceToAddTrustline": {
+      "title": "Sorry, insufficient funds",
+      "description": "Please make sure the account has enough funds to cover the new trustline"
+    },
+    "StellarMuxedAccountNotExist": {
+      "title": "Stellar account does not exist"
+    },
+    "StellarSourceHasMultiSign": {
+      "title": "Please disable multisign to make Stellar transactions"
     }
   },
   "cryptoOrg": {
@@ -4369,6 +4662,20 @@
     },
     "currentAddress": {
       "messageIfVirtual": "Your {{name}} address cannot be confirmed on your Ledger device. Use at your own risk."
+    },
+    "send": {
+      "memo": {
+        "label": "Memo (optional)",
+        "characterCount": "{{memoLength}} / {{memoMaxLength}}"
+      }
+    }
+  },
+  "drawers": {
+    "selectCurrency": {
+      "title": "choose asset"
+    },
+    "selectAccount": {
+      "title": "choose account"
     }
   }
 }

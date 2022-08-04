@@ -132,6 +132,7 @@ export const urls = {
     "https://support.ledger.com/hc/en-us/articles/360015897740?utm_source=ledger_live_desktop&utm_medium=self_referral&utm_content=algorand",
   polkadotFeesInfo:
     "https://support.ledger.com/hc/en-us/articles/360016289919?utm_source=ledger_live_desktop&utm_medium=self_referral&utm_content=polkadot",
+  elrondStaking: "https://everstake.one/elrond",
   xpubLearnMore:
     "https://support.ledger.com/hc/en-us/articles/360011069619?utm_source=ledger_live_desktop&utm_medium=self_referral&utm_content=edit_account",
   ledgerValidator: "https://www.ledger.com/staking",
@@ -178,6 +179,14 @@ export const urls = {
         support: "https://support.sendwyre.com/hc/en-us/requests/new",
         kyc: "https://support.ledger.com/hc/en-us/articles/4404422869265",
       },
+      ftx: {
+        main: "https://ftx.com",
+        support: "https://ftx.com/support",
+      },
+      ftxus: {
+        main: "https://ftx.us/",
+        support: "https://help.ftx.us/hc/en-us",
+      },
     },
   },
   exchange: {
@@ -217,6 +226,6 @@ export const urls = {
   },
   hedera: {
     supportArticleLink:
-      "https://launchbadge.com/blog/using-a-ledger-nano-to-create-your-hedera-account",
+      "https://support.ledger.com/hc/en-us/articles/4494505217565-Create-a-Ledger-Hedera-HBAR-account-via-HashPack?docs=true",
   },
 };

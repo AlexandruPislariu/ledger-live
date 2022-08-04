@@ -1,8 +1,8 @@
 import { $Shape } from "utility-types";
 import { BigNumber } from "bignumber.js";
-import type { Account } from "../../types";
-import type { Transaction } from "./types";
+import type { ElrondAccount, Transaction } from "./types";
 import getEstimatedFees from "./js-getFeesForTransaction";
+import { NetworkConfig } from "@elrondnetwork/erdjs/out";
 
 const sameFees = (a, b) => (!a || !b ? false : a === b);
 
@@ -19,6 +19,7 @@ export const createTransaction = (): Transaction => {
     recipient: "",
     useAllAmount: false,
     fees: new BigNumber(50000),
+    gasLimit: NetworkConfig.getDefault().MinGasLimit.valueOf(),
   };
 };
 
@@ -31,22 +32,22 @@ export const createTransaction = (): Transaction => {
 export const updateTransaction = (
   t: Transaction,
   patch: $Shape<Transaction>
-) => {
+): Transaction => {
   return { ...t, ...patch };
 };
 
 /**
  * Prepare transaction before checking status
  *
- * @param {Account} a
+ * @param {ElrondAccount} a
  * @param {Transaction} t
  */
-export const prepareTransaction = async (a: Account, t: Transaction) => {
+export const prepareTransaction = async (
+  a: ElrondAccount,
+  t: Transaction
+): Promise<Transaction> => {
   let fees = t.fees;
-  fees = await getEstimatedFees({
-    a,
-    t,
-  });
+  fees = await getEstimatedFees(t);
 
   if (!sameFees(t.fees, fees)) {
     return { ...t, fees };

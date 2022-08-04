@@ -1,15 +1,11 @@
 import { BigNumber } from "bignumber.js";
 import { useEffect, useReducer, useCallback, useRef } from "react";
 import { log } from "@ledgerhq/logs";
-import type {
-  Transaction,
-  TransactionStatus,
-  Account,
-  AccountLike,
-} from "../types";
 import { getAccountBridge } from ".";
 import { getMainAccount } from "../account";
 import { delay } from "../promise";
+import type { Account, AccountLike } from "@ledgerhq/types-live";
+import type { Transaction, TransactionStatus } from "../generated/types";
 export type State = {
   account: AccountLike | null | undefined;
   parentAccount: Account | null | undefined;
@@ -276,6 +272,15 @@ const useBridgeTransaction = (
       }
     };
   }, [transaction, mainAccount, bridgePending, dispatch]);
+
+  const bridgeError = errorAccount || errorStatus;
+
+  useEffect(() => {
+    if (bridgeError && globalOnBridgeError) {
+      globalOnBridgeError(bridgeError);
+    }
+  }, [bridgeError]);
+
   return {
     transaction,
     setTransaction,
@@ -284,9 +289,21 @@ const useBridgeTransaction = (
     account,
     parentAccount,
     setAccount,
-    bridgeError: errorAccount || errorStatus,
+    bridgeError,
     bridgePending,
   };
 };
+
+type GlobalBridgeErrorFn = null | ((error: any) => void);
+
+let globalOnBridgeError: GlobalBridgeErrorFn = null;
+
+// allows to globally set a bridge error catch function in order to log it / report to sentry / ...
+export function setGlobalOnBridgeError(f: GlobalBridgeErrorFn): void {
+  globalOnBridgeError = f;
+}
+export function getGlobalOnBridgeError(): GlobalBridgeErrorFn {
+  return globalOnBridgeError;
+}
 
 export default useBridgeTransaction;

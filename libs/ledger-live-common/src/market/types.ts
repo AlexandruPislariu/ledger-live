@@ -1,5 +1,5 @@
 // @flow
-import { CryptoCurrency } from "../types";
+import { CryptoCurrency } from "@ledgerhq/types-cryptoassets";
 
 export type MarketCoin = {
   id: string;
@@ -22,6 +22,7 @@ export type MarketListRequestParams = {
   lastRequestTime?: Date;
   sparkline?: boolean;
   liveCompatible?: boolean;
+  top100?: boolean;
 };
 
 export type MarketCurrencyChartDataRequestParams = {

@@ -1,10 +1,12 @@
-import type { Account } from "../../types";
+import type { Account } from "@ledgerhq/types-live";
 import { encodeAccountId } from "../../account";
 import type { GetAccountShape } from "../../bridge/jsHelpers";
 import { makeSync, makeScanAccounts, mergeOps } from "../../bridge/jsHelpers";
 import { getAccount, getOperations } from "./api";
+import { loadPolkadotCrypto } from "./polkadot-crypto";
 
 const getAccountShape: GetAccountShape = async (info) => {
+  await loadPolkadotCrypto();
   const { address, initialAccount, currency, derivationMode } = info;
   const oldOperations = initialAccount?.operations || [];
   const startAt = oldOperations.length

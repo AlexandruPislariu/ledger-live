@@ -17,7 +17,7 @@ import { pickSiblings } from "../../bot/specs";
 import type { AppSpec } from "../../bot/types";
 import { getGasLimit } from "./transaction";
 import { DeviceModelId } from "@ledgerhq/devices";
-import { TokenCurrency } from "@ledgerhq/cryptoassets";
+import { TokenCurrency } from "@ledgerhq/types-cryptoassets";
 import { CompoundAccountSummary } from "../../compound/types";
 
 const testTimeout = 5 * 60 * 1000;
@@ -26,10 +26,10 @@ const ethereumBasicMutations = ({ maxAccount }) => [
   {
     name: "move 50%",
     maxRun: 2,
-    transaction: ({ account, siblings, bridge }) => {
+    transaction: ({ account, siblings, bridge, maxSpendable }) => {
       const sibling = pickSiblings(siblings, maxAccount);
       const recipient = sibling.freshAddress;
-      const amount = account.balance.div(2).integerValue();
+      const amount = maxSpendable.div(2).integerValue();
       return {
         transaction: bridge.createTransaction(account),
         updates: [
@@ -375,9 +375,9 @@ const ethereumClassic: AppSpec<Transaction> = {
     maxAccount: 4,
   }),
 };
-const ethereumRopsten: AppSpec<Transaction> = {
-  name: "Ethereum Ropsten",
-  currency: getCryptoCurrencyById("ethereum_ropsten"),
+const ethereumGoerli: AppSpec<Transaction> = {
+  name: "Ethereum Goerli",
+  currency: getCryptoCurrencyById("ethereum_goerli"),
   appQuery: {
     model: DeviceModelId.nanoS,
     appName: "Ethereum",
@@ -387,7 +387,7 @@ const ethereumRopsten: AppSpec<Transaction> = {
     invariant(
       maxSpendable.gt(
         parseCurrencyUnit(
-          getCryptoCurrencyById("ethereum_ropsten").units[0],
+          getCryptoCurrencyById("ethereum_goerli").units[0],
           "0.01"
         )
       ),
@@ -498,5 +498,5 @@ export default {
   polygon,
   ethereum,
   ethereumClassic,
-  ethereumRopsten,
+  ethereumGoerli,
 };

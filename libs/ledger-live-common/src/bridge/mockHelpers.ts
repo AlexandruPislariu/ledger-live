@@ -7,10 +7,14 @@ import { genAccount, genOperation } from "../mock/account";
 import { getOperationAmountNumber } from "../operation";
 import { validateNameEdition } from "../account";
 import { delay } from "../promise";
-import type { Operation, Account } from "../types";
-import type { CurrencyBridge, AccountBridge } from "../types/bridge";
 import { getEnv } from "../env";
 import perFamilyMock from "../generated/mock";
+import {
+  Account,
+  AccountBridge,
+  CurrencyBridge,
+  Operation,
+} from "@ledgerhq/types-live";
 const MOCK_DATA_SEED = getEnv("MOCK") || "MOCK";
 const broadcasted: Record<string, Operation[]> = {};
 const syncTimeouts = {};
@@ -119,8 +123,11 @@ export const signOperation: AccountBridge<any>["signOperation"] = ({
       cancelled = true;
     };
   });
-export const isInvalidRecipient = (recipient: string) =>
-  recipient.includes("invalid") || recipient.length <= 3;
+export const isInvalidRecipient = (recipient: string) => {
+  if (recipient.includes("criticalcrash"))
+    throw new Error("isInvalidRecipient_mock_criticalcrash");
+  return recipient.includes("invalid") || recipient.length <= 3;
+};
 
 const subtractOneYear = (date) =>
   new Date(new Date(date).setFullYear(new Date(date).getFullYear() - 1));

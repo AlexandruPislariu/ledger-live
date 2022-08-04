@@ -1,4 +1,4 @@
-import type { Operation, SignedOperation } from "../../types";
+import type { Operation, SignedOperation } from "@ledgerhq/types-live";
 import { patchOperationWithHash } from "../../operation";
 import { broadcastTransaction } from "./api";
 
@@ -11,10 +11,7 @@ const broadcast = async ({
 }: {
   signedOperation: SignedOperation;
 }): Promise<Operation> => {
-  const hash = await broadcastTransaction({
-    operation,
-    signature,
-  });
+  const hash = await broadcastTransaction(operation, signature);
 
   return patchOperationWithHash(operation, hash);
 };

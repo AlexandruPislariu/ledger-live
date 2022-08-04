@@ -8,9 +8,8 @@ import {
   NotEnoughBalanceBecauseDestinationNotCreated,
   FeeNotLoaded,
 } from "@ledgerhq/errors";
-import type { Account, TransactionStatus } from "../../types";
 import { formatCurrencyUnit } from "../../currencies";
-import type { Transaction } from "./types";
+import type { PolkadotAccount, Transaction, TransactionStatus } from "./types";
 import {
   PolkadotUnauthorizedOperation,
   PolkadotElectionClosed,
@@ -41,10 +40,11 @@ import {
 import { isValidAddress } from "./address";
 import { getCurrentPolkadotPreloadData } from "./preload";
 import { isControllerAddress, isNewAccount, isElectionClosed } from "./cache";
+import { loadPolkadotCrypto } from "./polkadot-crypto";
 
 // Should try to refacto
 const getSendTransactionStatus = async (
-  a: Account,
+  a: PolkadotAccount,
   t: Transaction
 ): Promise<TransactionStatus> => {
   const errors: any = {};
@@ -131,10 +131,13 @@ const getSendTransactionStatus = async (
     estimatedFees,
     amount: amount.lt(0) ? new BigNumber(0) : amount,
     totalSpent,
+    family: t.family,
   });
 };
 
-const getTransactionStatus = async (a: Account, t: Transaction) => {
+const getTransactionStatus = async (a: PolkadotAccount, t: Transaction) => {
+  await loadPolkadotCrypto();
+
   const errors: {
     staking?: Error;
     amount?: Error;
